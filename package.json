@@ -1,0 +1,31 @@
+{
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "nohoist": [
+    "**"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "clean": "turbo clean && rm -rf node_modules",
+    "format": "prettier --write \\\"**/*.{ts,tsx,js,jsx,json,md}\\\" --ignore-path .gitignore",
+    "codegen": "graphql-codegen --config codegen.ts --watch"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "5.0.0",
+    "@graphql-codegen/client-preset": "^4.1.0",
+    "@parcel/watcher": "^2.3.0",
+    "prettier": "^2.7.1",
+    "ts-node": "^10.9.1",
+    "turbo": "latest",
+    "typescript": "^5.2.2"
+  },
+  "packageManager": "yarn@1.22.19",
+  "dependencies": {
+    "@types/node": "^20.8.9",
+    "graphql": "^16.8.1"
+  }
+}

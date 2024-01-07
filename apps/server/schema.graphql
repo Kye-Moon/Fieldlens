@@ -1,0 +1,160 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type LoginResponse {
+  access_token: String!
+  refresh_token: String!
+  user: UserAuth!
+}
+
+type UserAuth {
+  id: String!
+  name: String!
+  email: String!
+  role: String!
+  orgId: String!
+}
+
+type VerificationTokenResponse {
+  msg: String!
+  phone: String!
+  email: String!
+}
+
+type VerifiedCodeResponse {
+  reset_password_token: String!
+}
+
+type Organisation {
+  id: String!
+  name: String!
+}
+
+type User {
+  id: String!
+  phone: String!
+  password: String!
+  name: String!
+  email: String!
+  organisationId: String!
+  organisation: Organisation!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type MarkupDefaultSetting {
+  id: String!
+  date: Boolean!
+  time: Boolean!
+  location: Boolean!
+  logo: Boolean!
+  textColor: String!
+  textBackgroundColor: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Query {
+  searchUsers(userSearchInput: SearchUserInput!): [User!]!
+  user(id: String!): User!
+  currentUser: User!
+  organisation(id: String!): Organisation!
+  userMarkupDefaults: MarkupDefaultSetting!
+}
+
+input SearchUserInput {
+  name: String
+  phone: String
+  email: String
+  role: [String!]
+  organisationId: String
+}
+
+type Mutation {
+  login(loginUserInput: LoginInput!): LoginResponse!
+  signup(signupInput: SignUpInput!): LoginResponse!
+  requestVerificationCode(email: String!): VerificationTokenResponse!
+  verifyOTP(input: VerifyCodeInput!): VerifiedCodeResponse!
+  resetPassword(input: ResetPasswordInput!): LoginResponse!
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
+  createOrganisation(createOrganisationInput: CreateOrganisationInput!): Organisation!
+  updateOrganisation(updateOrganisationInput: UpdateOrganisationInput!): Organisation!
+  removeOrganisation(id: Int!): Organisation!
+  createMarkupDefaultSetting(createMarkupDefaultSettingInput: CreateMarkupDefaultSettingInput!): MarkupDefaultSetting!
+  updateMarkupDefaultSetting(updateMarkupDefaultSettingInput: UpdateMarkupDefaultSettingInput!): MarkupDefaultSetting!
+  removeMarkupDefaultSetting(id: String!): MarkupDefaultSetting!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input SignUpInput {
+  firstName: String!
+  lastName: String!
+  organisationName: String!
+  email: String!
+  password: String!
+}
+
+input VerifyCodeInput {
+  email: String!
+  code: String!
+}
+
+input ResetPasswordInput {
+  token: String!
+  password: String!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+  phone: String!
+  password: String
+}
+
+input UpdateUserInput {
+  name: String
+  email: String
+  phone: String
+  password: String
+  id: String!
+}
+
+input CreateOrganisationInput {
+  name: String!
+}
+
+input UpdateOrganisationInput {
+  name: String
+  id: Int!
+}
+
+input CreateMarkupDefaultSettingInput {
+  date: Boolean!
+  time: Boolean!
+  location: Boolean!
+  logo: Boolean!
+  textColor: String!
+  textBackgroundColor: String!
+}
+
+input UpdateMarkupDefaultSettingInput {
+  date: Boolean
+  time: Boolean
+  location: Boolean
+  logo: Boolean
+  textColor: String
+  textBackgroundColor: String
+  id: String!
+}

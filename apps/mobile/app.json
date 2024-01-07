@@ -1,0 +1,71 @@
+{
+  "expo": {
+    "name": "FieldLenz",
+    "slug": "fieldlenz",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "buildNumber": "1.0.1",
+      "supportsTablet": true,
+      "bundleIdentifier": "com.synex.fieldlens",
+      "infoPlist": {
+        "NSCameraUsageDescription": "$(PRODUCT_NAME) needs access to your Camera.",
+        "NSPhotoLibraryUsageDescription": "Allow $(PRODUCT_NAME) to access your photos.",
+        "NSPhotoLibraryAddUsageDescription": "Allow $(PRODUCT_NAME) to save photos."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.synex.fieldlens",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.ACCESS_MEDIA_LOCATION"
+      ]
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "react-native-vision-camera",
+        {
+          "cameraPermissionText": "$(PRODUCT_NAME) needs access to your Camera."
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
+          "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
+          "isAccessMediaLocationEnabled": true
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "de6e11a4-383c-4be7-bad7-e24e333cab20"
+      }
+    },
+    "owner": "kyemoon"
+  }
+}
