@@ -28,7 +28,6 @@ export default function RootLayout() {
     const apiUrl = useRecoilValueLoadable(apiUrlState)
     const router = useRouter();
 
-
     useEffect(() => {
         const httpLink = new HttpLink({
             uri: apiUrl.getValue() ? `${apiUrl.getValue()}` : "",
@@ -108,9 +107,7 @@ function RootLayoutNav() {
             await initialiseUser()
             await user?.reload()
         }
-        if (isLoaded && !user?.publicMetadata.fieldLenz_initialised) {
-            initUser()
-        }
+        initUser()
     }, [user?.publicMetadata.fieldLenz_initialised, isSignedIn])
 
     if (!user?.publicMetadata.fieldLenz_initialised) {
