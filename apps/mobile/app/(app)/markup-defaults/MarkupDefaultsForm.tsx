@@ -1,11 +1,8 @@
-import { StyleSheet } from "react-native";
-import { HStack, ScrollView, Switch, Text, View } from "@gluestack-ui/themed";
+import {StyleSheet} from "react-native";
+import {HStack, ScrollView, Switch, Text, View} from "@gluestack-ui/themed";
 import ColorPickerPopover from "../../../components/ColorPickerPopover";
-import React, { useState } from "react";
-import { useMutation, useSuspenseQuery } from "@apollo/client";
-import { graphql } from "gql-types";
-import { usePhotoOverlay } from "../../../context/PhotoOverlay";
-import { usePhotoOverlayDefaults } from "../../../hooks/usePhotoOverlay";
+import React from "react";
+import {usePhotoOverlayDefaults} from "../../../hooks/usePhotoOverlay";
 
 
 export default function MarkupDefaultsForm() {

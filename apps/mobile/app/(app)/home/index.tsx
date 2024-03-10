@@ -1,18 +1,17 @@
-import { Pressable, Spinner, Text, useToast, View } from "@gluestack-ui/themed";
-import React, { useEffect, useRef, useState } from "react";
-import { Stack, useRouter } from "expo-router";
-import { StyleSheet, TouchableOpacity } from "react-native";
-import { CameraIcon, SaveIcon, XIcon } from "lucide-react-native";
-import { AutoFocus, Camera, CameraCapturedPicture, CameraType } from "expo-camera";
-import { PinchGestureHandler } from "react-native-gesture-handler";
+import {Pressable, Spinner, Text, useToast, View} from "@gluestack-ui/themed";
+import React, {useEffect, useRef, useState} from "react";
+import {Stack, useRouter} from "expo-router";
+import {StyleSheet, TouchableOpacity} from "react-native";
+import {CameraIcon, SaveIcon, XIcon} from "lucide-react-native";
+import {AutoFocus, Camera, CameraCapturedPicture, CameraType} from "expo-camera";
+import {PinchGestureHandler} from "react-native-gesture-handler";
 import ViewShot from "react-native-view-shot";
 import * as MediaLibrary from "expo-media-library";
-import { usePhotoOverlay } from "../../../context/PhotoOverlay";
+import {usePhotoOverlay} from "../../../context/PhotoOverlay";
 import useDropboxUpload from "../../../hooks/useDropboxUpload";
-import { showSuccessToast } from "../../../lib/toasts";
-import { TabsAndCameraSection } from "./TabsAndCameraSection";
-import { handleZoom } from "../../../lib/utils";
-import { useSaveImage } from "../../../hooks/useSaveImage";
+import {TabsAndCameraSection} from "./TabsAndCameraSection";
+import {handleZoom} from "../../../lib/utils";
+import {useSaveImage} from "../../../hooks/useSaveImage";
 
 
 export default function HomePage() {

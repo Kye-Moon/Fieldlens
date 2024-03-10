@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
     Box,
     Button,
@@ -13,40 +13,22 @@ import {
     Text
 } from "@gluestack-ui/themed";
 import {Alert, Platform, StyleSheet} from "react-native";
-import {useMutation} from "@apollo/client";
-import {graphql} from "gql-types";
 import {useRouter} from "expo-router";
 import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {signInSchema} from "./signinSchema";
 import FormInputWrapper from "../../components/FormInputWrapper";
-import {accessTokenState, API_URLS, apiUrlState} from "../../state/atoms";
-import {useRecoilState, useSetRecoilState} from "recoil";
-
-export const loginMutationMobile = graphql(`
-    mutation LoginMutationMobile($input: LoginInput!) {
-        login(loginUserInput: $input) {
-            access_token
-            refresh_token
-            user {
-                id
-            }
-        }
-    }
-`);
+import {API_URLS, apiUrlState} from "../../state/atoms";
+import {useRecoilState} from "recoil";
+import {useSignIn} from "@clerk/clerk-expo";
 
 export default function SignIn() {
     const router = useRouter();
     const [logoPressCount, setLogoPressCount] = useState(0);
-    const  setApi = useSetRecoilState(apiUrlState);
-    const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
-    const api = useRecoilState(apiUrlState);
+    const [apiUrl, setApi] = useRecoilState(apiUrlState);
+    const {signIn, setActive, isLoaded} = useSignIn();
+    const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        if (accessToken) {
-            router.push('/(app)/home')
-        }
-    }, [accessToken]);
     const handlePressLogo = () => {
         if (logoPressCount === 4) {
             Alert.alert(
@@ -74,26 +56,24 @@ export default function SignIn() {
         }
     })
 
-    const [login,{loading}] = useMutation(loginMutationMobile, {
-        onError: (error) => {
-            console.log(error);
-            throw error;
-        },
-        onCompleted: async (data) => {
-            setAccessToken(data.login.access_token);
-        }
-    })
 
     const onSubmit = async (data: any) => {
-        await login({
-            variables: {
-                input: {
-                    email: data.email.toLowerCase(),
-                    password: data.password,
-                },
-            }
-        })
-        router.push('/(app)/home')
+        setLoading(true);
+        if (!isLoaded) {
+            return;
+        }
+        try {
+            const completeSignIn = await signIn.create({
+                identifier: data.email.toLowerCase(),
+                password: data.password,
+            });
+            await setActive({session: completeSignIn.createdSessionId});
+        } catch (err: any) {
+            setLoading(false);
+            console.error(err.errors[0].message);
+            Alert.alert('Error', err.errors[0].message);
+        }
+
     }
 
     return (
@@ -102,13 +82,10 @@ export default function SignIn() {
                 behavior={Platform.OS === "ios" ? "height" : "height"}
                 style={{flex: 1}}
             >
-                <Text>
-                    {JSON.stringify(api)}
-
-                </Text>
                 <Center style={styles.content}>
                     <Pressable onPress={handlePressLogo}>
                         <Image alt={'logo'} source={require('../../assets/images/FieldLens.png')} style={styles.logo}/>
+                        {apiUrl === API_URLS.local && <Text size={'xs'}>LOCAL</Text>}
                     </Pressable>
                     <Controller
                         control={form.control}
@@ -118,6 +95,7 @@ export default function SignIn() {
                                 <Input w={'100%'}>
                                     <InputField
                                         type={'text'}
+                                        textContentType={'oneTimeCode'}
                                         onBlur={field.onBlur}
                                         value={field.value}
                                         onChange={value => field.onChange(value.nativeEvent.text)}
@@ -145,9 +123,6 @@ export default function SignIn() {
                     <Button w={'100%'} mx={'$8'} onPress={form.handleSubmit(onSubmit)}>
                         {loading ? <ButtonSpinner/> : <ButtonText>Sign in</ButtonText>}
                     </Button>
-                    <Pressable onPress={() => router.push('/sign-up')}>
-                        <Text size={'sm'}>Don't have an account? Sign up</Text>
-                    </Pressable>
                     <Pressable onPress={() => router.push('/reset-password')}>
                         <Text size={'sm'}>Forgot password?</Text>
                     </Pressable>

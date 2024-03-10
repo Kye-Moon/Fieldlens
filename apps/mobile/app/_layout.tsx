@@ -2,16 +2,12 @@ import {Slot, SplashScreen} from "expo-router";
 import {GluestackUIProvider, Text} from "@gluestack-ui/themed"
 import {RecoilRoot} from "recoil";
 import React, {Suspense, useEffect} from "react";
-import {ApolloWrapper} from "../context/ApolloWrapper";
 import {config} from "../config/gluestack-ui.config";
 import {loadDevMessages, loadErrorMessages} from "@apollo/client/dev";
 
 import {registerRootComponent} from "expo";
-
-export {
-    // Catch any errors thrown by the Layout component.
-    ErrorBoundary,
-} from 'expo-router';
+import {ClerkProvider} from "@clerk/clerk-expo";
+import {tokenCache} from "../lib/tokenCache";
 
 const {App} = require('expo-router/_app');
 registerRootComponent(App);
@@ -35,13 +31,14 @@ export default function Root() {
 
     return (
         <GluestackUIProvider config={config}>
-            <RecoilRoot>
-                <Suspense fallback={<Text>Loading...</Text>}>
-                    <ApolloWrapper>
-                            <Slot/>
-                    </ApolloWrapper>
-                </Suspense>
-            </RecoilRoot>
+            {/*@ts-ignore*/}
+            <ClerkProvider tokenCache={tokenCache} publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}>
+                <RecoilRoot>
+                    <Suspense fallback={<Text>Loading...</Text>}>
+                        <Slot/>
+                    </Suspense>
+                </RecoilRoot>
+            </ClerkProvider>
         </GluestackUIProvider>
     )
 }

@@ -15,6 +15,11 @@ export class OrganisationRepository {
             where: eq(organisation.id, id)
         })
     }
+    async findByAuthId(authId: string) {
+        return await this.db.query.organisation.findFirst({
+            where: eq(organisation.authId, authId)
+        })
+    }
 
     async findOneByName(name: string) {
         return await this.db.query.organisation.findFirst({

@@ -25,6 +25,7 @@
     "@aws-sdk/s3-presigned-post": "^3.451.0",
     "@aws-sdk/s3-request-presigner": "^3.451.0",
     "@benjeau/react-native-draw": "^0.8.3",
+    "@clerk/clerk-sdk-node": "^4.13.11",
     "@graphql-yoga/nestjs": "^3.0.0",
     "@nestjs-modules/mailer": "^1.9.1",
     "@nestjs/common": "^10.0.0",

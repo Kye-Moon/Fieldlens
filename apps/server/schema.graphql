@@ -2,43 +2,18 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type LoginResponse {
-  access_token: String!
-  refresh_token: String!
-  user: UserAuth!
-}
-
-type UserAuth {
-  id: String!
-  name: String!
-  email: String!
-  role: String!
-  orgId: String!
-}
-
-type VerificationTokenResponse {
-  msg: String!
-  phone: String!
-  email: String!
-}
-
-type VerifiedCodeResponse {
-  reset_password_token: String!
-}
-
 type Organisation {
   id: String!
   name: String!
 }
 
-type User {
+type UserOrganisation {
   id: String!
-  phone: String!
-  password: String!
-  name: String!
-  email: String!
+  userId: String!
   organisationId: String!
+  role: String!
   organisation: Organisation!
+  user: User!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -47,6 +22,18 @@ type User {
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+
+type User {
+  id: String!
+  phone: String
+  name: String!
+  authId: String!
+  email: String!
+  organisation: Organisation
+  userOrganisation: UserOrganisation
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
 
 type ImageInfo {
   id: String!
@@ -73,12 +60,8 @@ input SearchUserInput {
 }
 
 type Mutation {
-  login(loginUserInput: LoginInput!): LoginResponse!
-  signup(signupInput: SignUpInput!): LoginResponse!
-  requestVerificationCode(email: String!): VerificationTokenResponse!
-  verifyOTP(input: VerifyCodeInput!): VerifiedCodeResponse!
-  resetPassword(input: ResetPasswordInput!): LoginResponse!
   createUser(createUserInput: CreateUserInput!): User!
+  initialiseUser: User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
   createOrganisation(createOrganisationInput: CreateOrganisationInput!): Organisation!
@@ -88,50 +71,33 @@ type Mutation {
   removeImageInfo(id: String!): ImageInfo!
 }
 
-input LoginInput {
-  email: String!
-  password: String!
-}
-
-input SignUpInput {
-  firstName: String!
-  lastName: String!
-  organisationName: String!
-  email: String!
-  password: String!
-}
-
-input VerifyCodeInput {
-  email: String!
-  code: String!
-}
-
-input ResetPasswordInput {
-  token: String!
-  password: String!
-}
-
 input CreateUserInput {
   name: String!
   email: String!
   phone: String!
-  password: String
+  role: String!
+  authId: String!
 }
 
 input UpdateUserInput {
   name: String
   email: String
   phone: String
-  password: String
+  role: String
+  authId: String
   id: String!
 }
 
 input CreateOrganisationInput {
   name: String!
+  authId: String!
+  logoUrl: String
 }
 
 input UpdateOrganisationInput {
   name: String
+  authId: String
+  logoUrl: String
   id: Int!
 }
 

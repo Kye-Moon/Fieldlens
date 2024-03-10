@@ -1,7 +1,7 @@
 import React from "react";
 import {makeRedirectUri, useAuthRequest} from "expo-auth-session";
 import {SetterOrUpdater, useSetRecoilState} from "recoil";
-import {dropboxAccessTokenState, dropboxRefreshTokenState} from "../state/atoms";
+import {dropboxAccessTokenState, dropboxRefreshTokenState, dropboxUploadDefaultState} from "../state/atoms";
 
 export const dropBoxAuthService = (() => {
 
@@ -13,10 +13,11 @@ export const dropBoxAuthService = (() => {
         const [request, response, promptAsync] = useDropboxAuthRequest();
         const setDropBoxAccessToken = useSetRecoilState(dropboxAccessTokenState);
         const setDropBoxRefreshToken = useSetRecoilState(dropboxRefreshTokenState);
-
+        const setDropBoxUploadDefault = useSetRecoilState(dropboxUploadDefaultState);
         React.useEffect(() => {
             if (response?.type === "success") {
                 handleAuthSuccess(response.params.code, response.params.state, request?.codeVerifier, setDropBoxAccessToken, setDropBoxRefreshToken);
+                setDropBoxUploadDefault(true)
             }
         }, [response, request?.codeVerifier, setDropBoxAccessToken, setDropBoxRefreshToken]);
 

@@ -1,36 +1,37 @@
 import {Field, ObjectType} from '@nestjs/graphql';
 import {Organisation} from "../../organisation/entities/organisation.entity";
+import {UserOrganisation} from "../../user-organisation/entities/user-organisation.entity";
 
 
 export type UserRoles = "OWNER" | "ADMIN" | "SUPERVISOR" | "CREW_MEMBER";
-export type UserStatus = "ACTIVE" | "INVITED" | "DEACTIVATED"
+export type UserStatus = "ACTIVE" | "INACTIVE"
 
 @ObjectType()
 export class User {
     @Field(() => String)
     id: string;
 
-    @Field(() => String)
-    phone: string;
-
-    @Field(() => String)
-    password: string;
+    @Field(() => String,{nullable: true})
+    phone?: string;
 
     @Field(() => String)
     name: string;
 
     @Field(() => String)
-    email: string;
+    authId: string;
 
     @Field(() => String)
-    organisationId: string;
+    email: string;
 
-    @Field(() => Organisation)
+    @Field(() => Organisation, {nullable: true})
     organisation?: Organisation;
 
-    @Field(() => Date)
-    createdAt: Date
+    @Field(() => UserOrganisation, {nullable: true})
+    userOrganisation?: UserOrganisation;
 
     @Field(() => Date)
-    updatedAt: Date
+    createdAt: Date = new Date();
+
+    @Field(() => Date)
+    updatedAt = new Date();
 }

@@ -29,7 +29,6 @@ export const photoOverlayDefaultsSelector = selector({
     const showLogoDefault = get(showLogoDefaultState);
     const textBackgroundColourDefault = get(textBackgroundColourState);
     const textColourDefault = get(textColourState);
-    console.log("recoil selector running");
     return {
       showDateDefault,
       showLocationDefault,
