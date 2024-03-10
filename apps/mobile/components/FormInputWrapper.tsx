@@ -1,9 +1,6 @@
 import React, {JSX} from 'react';
 import {
-    AlertCircleIcon,
     FormControl,
-    FormControlError,
-    FormControlErrorIcon,
     FormControlHelper,
     FormControlHelperText,
     FormControlLabel,
@@ -20,7 +17,15 @@ interface FormInputWrapperProps {
     width?: string
 }
 
-export default function FormInputWrapper({children, formState, field, helperText, title,width}: FormInputWrapperProps): JSX.Element {
+export default function FormInputWrapper({
+                                             children,
+                                             formState,
+                                             field,
+                                             helperText,
+                                             title,
+                                             width
+                                         }: FormInputWrapperProps): JSX.Element {
+
     return (
         <>
             <FormControl
@@ -32,7 +37,7 @@ export default function FormInputWrapper({children, formState, field, helperText
                         <FormControlLabelText>{title}</FormControlLabelText>
                     </FormControlLabel>
                 )}
-                    {children}
+                {children}
                 {helperText && (
                     <FormControlHelper>
                         <FormControlHelperText>
@@ -40,12 +45,6 @@ export default function FormInputWrapper({children, formState, field, helperText
                         </FormControlHelperText>
                     </FormControlHelper>
                 )}
-                <FormControlError>
-                    <FormControlErrorIcon as={AlertCircleIcon}/>
-                    {/*<FormControlErrorText>*/}
-                    {/*    {formState.errors[`${field.name}`] !== undefined ? formState.errors[`${field.name}`]?.message : ''}*/}
-                    {/*</FormControlErrorText>*/}
-                </FormControlError>
             </FormControl>
         </>
 

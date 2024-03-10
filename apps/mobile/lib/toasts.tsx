@@ -8,7 +8,8 @@ interface ToastProps {
 }
 
 interface ErrorToastProps extends ToastProps {
-    error: ApolloError
+    error?: ApolloError
+    message?: string
 }
 
 interface SuccessToastProps extends ToastProps {
@@ -16,9 +17,10 @@ interface SuccessToastProps extends ToastProps {
 }
 
 
-export function showErrorToast({error, toast, placement = "top right"}: ErrorToastProps) {
+export function showErrorToast({error, toast, placement = "top right", message}: ErrorToastProps) {
     return toast.show({
         placement: placement,
+        duration: 5000,
         render: ({id}: { id: string }) => {
             return (
                 <Toast
@@ -29,7 +31,8 @@ export function showErrorToast({error, toast, placement = "top right"}: ErrorToa
                     <VStack space="xs">
                         <ToastTitle>Error</ToastTitle>
                         <ToastDescription>
-                            {error.message}
+                            {error?.message}
+                            {message}
                         </ToastDescription>
                     </VStack>
                 </Toast>

@@ -1,9 +1,9 @@
 import * as ImagePicker from "expo-image-picker";
 import {LazyQueryExecFunction} from "@apollo/client";
-import {Exact, PreSignedUrlQuery} from "gql-types"
+import {Exact} from "gql-types"
 
 interface UploadImagesProps {
-    getPresignedUrl: LazyQueryExecFunction<PreSignedUrlQuery, Exact<{ key: string }>>;
+    getPresignedUrl: LazyQueryExecFunction<any, Exact<{ key: string }>>;
     images: ImagePicker.ImagePickerAsset[];
     variationId: string;
 

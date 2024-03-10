@@ -18,13 +18,11 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
 };
 
-export type CreateMarkupDefaultSettingInput = {
-  date: Scalars['Boolean']['input'];
-  location: Scalars['Boolean']['input'];
-  logo: Scalars['Boolean']['input'];
-  textBackgroundColor: Scalars['String']['input'];
-  textColor: Scalars['String']['input'];
-  time: Scalars['Boolean']['input'];
+export type CreateImageInfoInput = {
+  imageId: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  savedLocations: Array<Scalars['String']['input']>;
+  uri: Scalars['String']['input'];
 };
 
 export type CreateOrganisationInput = {
@@ -36,6 +34,15 @@ export type CreateUserInput = {
   name: Scalars['String']['input'];
   password?: InputMaybe<Scalars['String']['input']>;
   phone: Scalars['String']['input'];
+};
+
+export type ImageInfo = {
+  __typename?: 'ImageInfo';
+  id: Scalars['String']['output'];
+  imageId: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  savedLocations: Array<Scalars['String']['output']>;
+  uri: Scalars['String']['output'];
 };
 
 export type LoginInput = {
@@ -50,40 +57,26 @@ export type LoginResponse = {
   user: UserAuth;
 };
 
-export type MarkupDefaultSetting = {
-  __typename?: 'MarkupDefaultSetting';
-  createdAt: Scalars['DateTime']['output'];
-  date: Scalars['Boolean']['output'];
-  id: Scalars['String']['output'];
-  location: Scalars['Boolean']['output'];
-  logo: Scalars['Boolean']['output'];
-  textBackgroundColor: Scalars['String']['output'];
-  textColor: Scalars['String']['output'];
-  time: Scalars['Boolean']['output'];
-  updatedAt: Scalars['DateTime']['output'];
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
-  createMarkupDefaultSetting: MarkupDefaultSetting;
+  createImageInfo: ImageInfo;
   createOrganisation: Organisation;
   createUser: User;
   login: LoginResponse;
-  removeMarkupDefaultSetting: MarkupDefaultSetting;
+  removeImageInfo: ImageInfo;
   removeOrganisation: Organisation;
   removeUser: User;
   requestVerificationCode: VerificationTokenResponse;
   resetPassword: LoginResponse;
   signup: LoginResponse;
-  updateMarkupDefaultSetting: MarkupDefaultSetting;
   updateOrganisation: Organisation;
   updateUser: User;
   verifyOTP: VerifiedCodeResponse;
 };
 
 
-export type MutationCreateMarkupDefaultSettingArgs = {
-  createMarkupDefaultSettingInput: CreateMarkupDefaultSettingInput;
+export type MutationCreateImageInfoArgs = {
+  createImageInfoInput: CreateImageInfoInput;
 };
 
 
@@ -102,7 +95,7 @@ export type MutationLoginArgs = {
 };
 
 
-export type MutationRemoveMarkupDefaultSettingArgs = {
+export type MutationRemoveImageInfoArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -132,11 +125,6 @@ export type MutationSignupArgs = {
 };
 
 
-export type MutationUpdateMarkupDefaultSettingArgs = {
-  updateMarkupDefaultSettingInput: UpdateMarkupDefaultSettingInput;
-};
-
-
 export type MutationUpdateOrganisationArgs = {
   updateOrganisationInput: UpdateOrganisationInput;
 };
@@ -160,10 +148,10 @@ export type Organisation = {
 export type Query = {
   __typename?: 'Query';
   currentUser: User;
+  imageInfo: Array<ImageInfo>;
   organisation: Organisation;
   searchUsers: Array<User>;
   user: User;
-  userMarkupDefaults: MarkupDefaultSetting;
 };
 
 
@@ -200,16 +188,6 @@ export type SignUpInput = {
   lastName: Scalars['String']['input'];
   organisationName: Scalars['String']['input'];
   password: Scalars['String']['input'];
-};
-
-export type UpdateMarkupDefaultSettingInput = {
-  date?: InputMaybe<Scalars['Boolean']['input']>;
-  id: Scalars['String']['input'];
-  location?: InputMaybe<Scalars['Boolean']['input']>;
-  logo?: InputMaybe<Scalars['Boolean']['input']>;
-  textBackgroundColor?: InputMaybe<Scalars['String']['input']>;
-  textColor?: InputMaybe<Scalars['String']['input']>;
-  time?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type UpdateOrganisationInput = {
@@ -264,18 +242,6 @@ export type VerifyCodeInput = {
   email: Scalars['String']['input'];
 };
 
-export type MarkupDefaultsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type MarkupDefaultsQuery = { __typename?: 'Query', userMarkupDefaults: { __typename?: 'MarkupDefaultSetting', textBackgroundColor: string, textColor: string, id: string, date: boolean, time: boolean, location: boolean, logo: boolean } };
-
-export type UpdateMarkupDefaultsMutationVariables = Exact<{
-  input: UpdateMarkupDefaultSettingInput;
-}>;
-
-
-export type UpdateMarkupDefaultsMutation = { __typename?: 'Mutation', updateMarkupDefaultSetting: { __typename?: 'MarkupDefaultSetting', id: string } };
-
 export type LoginMutationMobileMutationVariables = Exact<{
   input: LoginInput;
 }>;
@@ -311,11 +277,17 @@ export type VerifyOtpMutationVariables = Exact<{
 
 export type VerifyOtpMutation = { __typename?: 'Mutation', verifyOTP: { __typename?: 'VerifiedCodeResponse', reset_password_token: string } };
 
+export type SaveImageDateMutationVariables = Exact<{
+  input: CreateImageInfoInput;
+}>;
 
-export const MarkupDefaultsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"MarkupDefaults"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userMarkupDefaults"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"textBackgroundColor"}},{"kind":"Field","name":{"kind":"Name","value":"textColor"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"time"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"logo"}}]}}]}}]} as unknown as DocumentNode<MarkupDefaultsQuery, MarkupDefaultsQueryVariables>;
-export const UpdateMarkupDefaultsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateMarkupDefaults"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateMarkupDefaultSettingInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateMarkupDefaultSetting"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"updateMarkupDefaultSettingInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateMarkupDefaultsMutation, UpdateMarkupDefaultsMutationVariables>;
+
+export type SaveImageDateMutation = { __typename?: 'Mutation', createImageInfo: { __typename?: 'ImageInfo', id: string } };
+
+
 export const LoginMutationMobileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LoginMutationMobile"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"loginUserInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"access_token"}},{"kind":"Field","name":{"kind":"Name","value":"refresh_token"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<LoginMutationMobileMutation, LoginMutationMobileMutationVariables>;
 export const SignUpMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SignUpMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SignUpInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"signupInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"access_token"}},{"kind":"Field","name":{"kind":"Name","value":"refresh_token"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<SignUpMutationMutation, SignUpMutationMutationVariables>;
 export const GetOtpDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"GetOTP"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"requestVerificationCode"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"msg"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<GetOtpMutation, GetOtpMutationVariables>;
 export const ResetPasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ResetPassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ResetPasswordInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"resetPassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"access_token"}}]}}]}}]} as unknown as DocumentNode<ResetPasswordMutation, ResetPasswordMutationVariables>;
 export const VerifyOtpDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"VerifyOTP"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"VerifyCodeInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"verifyOTP"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"reset_password_token"}}]}}]}}]} as unknown as DocumentNode<VerifyOtpMutation, VerifyOtpMutationVariables>;
+export const SaveImageDateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SaveImageDate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateImageInfoInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createImageInfo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createImageInfoInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<SaveImageDateMutation, SaveImageDateMutationVariables>;

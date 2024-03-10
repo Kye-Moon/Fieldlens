@@ -48,16 +48,12 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type MarkupDefaultSetting {
+type ImageInfo {
   id: String!
-  date: Boolean!
-  time: Boolean!
-  location: Boolean!
-  logo: Boolean!
-  textColor: String!
-  textBackgroundColor: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  imageId: String!
+  name: String!
+  uri: String!
+  savedLocations: [String!]!
 }
 
 type Query {
@@ -65,7 +61,7 @@ type Query {
   user(id: String!): User!
   currentUser: User!
   organisation(id: String!): Organisation!
-  userMarkupDefaults: MarkupDefaultSetting!
+  imageInfo: [ImageInfo!]!
 }
 
 input SearchUserInput {
@@ -88,9 +84,8 @@ type Mutation {
   createOrganisation(createOrganisationInput: CreateOrganisationInput!): Organisation!
   updateOrganisation(updateOrganisationInput: UpdateOrganisationInput!): Organisation!
   removeOrganisation(id: Int!): Organisation!
-  createMarkupDefaultSetting(createMarkupDefaultSettingInput: CreateMarkupDefaultSettingInput!): MarkupDefaultSetting!
-  updateMarkupDefaultSetting(updateMarkupDefaultSettingInput: UpdateMarkupDefaultSettingInput!): MarkupDefaultSetting!
-  removeMarkupDefaultSetting(id: String!): MarkupDefaultSetting!
+  createImageInfo(createImageInfoInput: CreateImageInfoInput!): ImageInfo!
+  removeImageInfo(id: String!): ImageInfo!
 }
 
 input LoginInput {
@@ -140,21 +135,9 @@ input UpdateOrganisationInput {
   id: Int!
 }
 
-input CreateMarkupDefaultSettingInput {
-  date: Boolean!
-  time: Boolean!
-  location: Boolean!
-  logo: Boolean!
-  textColor: String!
-  textBackgroundColor: String!
-}
-
-input UpdateMarkupDefaultSettingInput {
-  date: Boolean
-  time: Boolean
-  location: Boolean
-  logo: Boolean
-  textColor: String
-  textBackgroundColor: String
-  id: String!
+input CreateImageInfoInput {
+  imageId: String!
+  name: String!
+  uri: String!
+  savedLocations: [String!]!
 }

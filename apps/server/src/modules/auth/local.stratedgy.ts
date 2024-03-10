@@ -1,4 +1,4 @@
-// auth/local.strategy.ts
+// auth.ts/local.strategy.ts
 
 import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';

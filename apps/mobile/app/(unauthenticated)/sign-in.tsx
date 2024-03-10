@@ -40,6 +40,7 @@ export default function SignIn() {
     const [logoPressCount, setLogoPressCount] = useState(0);
     const  setApi = useSetRecoilState(apiUrlState);
     const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+    const api = useRecoilState(apiUrlState);
 
     useEffect(() => {
         if (accessToken) {
@@ -101,6 +102,10 @@ export default function SignIn() {
                 behavior={Platform.OS === "ios" ? "height" : "height"}
                 style={{flex: 1}}
             >
+                <Text>
+                    {JSON.stringify(api)}
+
+                </Text>
                 <Center style={styles.content}>
                     <Pressable onPress={handlePressLogo}>
                         <Image alt={'logo'} source={require('../../assets/images/FieldLens.png')} style={styles.logo}/>

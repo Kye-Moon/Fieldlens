@@ -5,13 +5,18 @@ import {Stack, useRouter} from "expo-router";
 import ScreenSection from "../../../components/ScreenSection";
 import {useSetRecoilState} from "recoil";
 import {accessTokenState} from "../../../state/atoms";
-import {CameraIcon} from "lucide-react-native";
+import {CameraIcon, SaveIcon} from "lucide-react-native";
 
 const settingsItems = [
     {
         title: 'Markup Defaults',
         icon: <CameraIcon size={24} color={'black'}/>,
         path: 'markup-defaults',
+    },
+    {
+        title: 'Default Save Locations',
+        icon: <SaveIcon size={24} color={'black'}/>,
+        path: 'save-location-defaults',
     },
 ]
 
@@ -32,7 +37,7 @@ export default function SettingsScreen() {
             <View style={styles.content}>
                 <ScrollView>
                     {settingsItems.map((item, index) => (
-                        <Pressable key={index} onPress={() => router.push(`/(app)/${item.path}`)}>
+                        <Pressable py={'$2'}  key={index} onPress={() => router.push(`/(app)/${item.path}`)}>
                             <HStack  style={styles.settingsItem}>
                                 <Text size={'md'} fontWeight={'$semibold'}>{item.title}</Text>
                                 {item.icon}
