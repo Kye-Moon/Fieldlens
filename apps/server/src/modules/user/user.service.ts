@@ -19,30 +19,15 @@ export class UserService {
     ) {
     }
 
-
-    async invite(input: InviteUserInput) {
-        // try {
-        //     await clerkClient.organizations.createOrganizationInvitation({
-        //         inviterUserId: this.request.userId,
-        //         organizationId: this.request.organisationId,
-        //         role: 'org:member',
-        //         emailAddress: input.email,
-        //         publicMetadata: {
-        //             'varify_role': input.role
-        //         }
-        //     })
-        // } catch (e) {
-        //     console.log(e)
-        //     throw new Error(e.errors[0].message);
-        // }
-    }
-
     async initialise(): Promise<User> {
+        console.log('initialising user')
         const organisation = await this.organisationService.findOrCreateByAuthId(this.request.organisationId);
         const authUser = await clerkClient.users.getUser(this.request.userId)
+        console.log('authUser', authUser)
         let user = await this.userRepository.findOneByAuthId(authUser.id);
         const userOrgRole = await this.getUserRoleFromCurrentOrg(organisation);
         if (user) {
+            console.log('user exists')
             const userOrgs = await this.userOrganisationService.getAllByUserId(user.id);
             const userOrg = userOrgs.find((userOrg) => userOrg.organisationId === organisation.id);
             if (!userOrg) {
@@ -54,6 +39,7 @@ export class UserService {
                 });
             }
         } else {
+            console.log('user does not exist')
             user = await this.userRepository.createUser({
                 name: authUser.firstName + ' ' + authUser.lastName,
                 email: authUser.emailAddresses[0].emailAddress,
@@ -66,6 +52,8 @@ export class UserService {
                 role: userOrgRole
             });
         }
+        console.log('user', user)
+        console.log("setting fieldLenz_initialised")
         await clerkClient.users.updateUserMetadata(user.authId, {
             publicMetadata: {
                 ...authUser.publicMetadata,

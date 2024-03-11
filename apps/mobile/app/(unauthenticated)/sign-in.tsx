@@ -4,7 +4,7 @@ import {
     Button,
     ButtonSpinner,
     ButtonText,
-    Center,
+    Center, HStack,
     Image,
     Input,
     InputField,
@@ -21,6 +21,7 @@ import FormInputWrapper from "../../components/FormInputWrapper";
 import {API_URLS, apiUrlState} from "../../state/atoms";
 import {useRecoilState} from "recoil";
 import {useSignIn} from "@clerk/clerk-expo";
+import * as Linking from 'expo-linking';
 
 export default function SignIn() {
     const router = useRouter();
@@ -123,6 +124,12 @@ export default function SignIn() {
                     <Button w={'100%'} mx={'$8'} onPress={form.handleSubmit(onSubmit)}>
                         {loading ? <ButtonSpinner/> : <ButtonText>Sign in</ButtonText>}
                     </Button>
+                    <Pressable onPress={() => Linking.openURL('https://synex.one/signup')}>
+                        <HStack>
+                            <Text size={'sm'}>Don't have an account? </Text>
+                            <Text size={'sm'} fontWeight={"bold"}>Sign up</Text>
+                        </HStack>
+                    </Pressable>
                     <Pressable onPress={() => router.push('/reset-password')}>
                         <Text size={'sm'}>Forgot password?</Text>
                     </Pressable>

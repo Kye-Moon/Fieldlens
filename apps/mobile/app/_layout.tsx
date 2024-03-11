@@ -22,8 +22,6 @@ if (__DEV__) {  // Adds messages only in a dev environment
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 export default function Root() {
-
-
     useEffect(() => {
         SplashScreen.hideAsync();
     }, []);

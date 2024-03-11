@@ -16,7 +16,7 @@
       "**/*"
     ],
     "ios": {
-      "buildNumber": "1.0.1",
+      "buildNumber": "5",
       "supportsTablet": true,
       "bundleIdentifier": "com.synex.fieldlens",
       "infoPlist": {
@@ -26,6 +26,7 @@
       }
     },
     "android": {
+      "versionCode": "5",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"

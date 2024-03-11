@@ -20,7 +20,7 @@ export class UserResolver {
     @UseGuards(AuthGuard)
     @Mutation(() => User)
     createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
-        return this.userService.invite(createUserInput);
+        return null;
     }
 
     @UseGuards(AuthGuard)
